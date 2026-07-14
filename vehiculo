@@ -1,0 +1,19 @@
+package model;
+
+public class Vehiculo implements Registrable {
+    private String patente;
+    private String modelo;
+
+    public Vehiculo(String patente, String modelo) {
+        this.patente = patente;
+        this.modelo = modelo;
+    }
+
+    public String getPatente() { return patente; }
+    public String getModelo() { return modelo; }
+
+    @Override
+    public void mostrarResumen() {
+        System.out.println("[VEHÍCULO] Patente: " + patente + " | Modelo: " + modelo);
+    }
+}
