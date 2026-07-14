@@ -1,0 +1,40 @@
+package data;
+
+import model.Registrable;
+import model.GuiaTuristico;
+import model.Vehiculo;
+import model.ColaboradorExterno;
+import java.util.ArrayList;
+
+public class GestorEntidades {
+    private ArrayList<Registrable> listaEntidades;
+
+    public GestorEntidades() {
+        this.listaEntidades = new ArrayList<>();
+    }
+
+    public void agregarEntidad(Registrable entidad) {
+        listaEntidades.add(entidad);
+    }
+
+    public void mostrarTodas() {
+        System.out.println("\n--- RESUMEN POLIMÓRFICO DE ENTIDADES ---");
+        for (Registrable r : listaEntidades) {
+            // Llamada polimórfica al método de la interfaz
+            r.mostrarResumen();
+            
+            // Uso de instanceof para lógica diferenciada
+            if (r instanceof GuiaTuristico) {
+                System.out.println("   -> Nota: Este es un personal interno especializado.");
+            } else if (r instanceof Vehiculo) {
+                System.out.println("   -> Nota: Requiere revisión de mantenimiento mensual.");
+            } else if (r instanceof ColaboradorExterno) {
+                System.out.println("   -> Nota: Servicio externo bajo contrato.");
+            }
+        }
+    }
+
+    public ArrayList<Registrable> getListaEntidades() {
+        return listaEntidades;
+    }
+}
