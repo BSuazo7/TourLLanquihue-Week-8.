@@ -7,6 +7,7 @@ El sistema permite gestionar diversas entidades (Guías Turísticos, Vehículos 
 Estructura del Proyecto
 El código se organiza en los siguientes paquetes siguiendo el estándar modular:
 
+
 model: Contiene la interfaz Registrable y la jerarquía de clases (Persona, GuiaTuristico, Vehiculo, ColaboradorExterno).
 data: Incluye la clase GestorEntidades, encargada de manejar la colección polimórfica de objetos.
 ui: Contiene la clase VentanaPrincipal, que implementa la interfaz gráfica usando JOptionPane.
