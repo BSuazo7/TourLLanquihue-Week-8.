@@ -1,0 +1,11 @@
+package app;
+
+import ui.VentanaPrincipal;
+
+public class Main {
+    public static void main(String[] args) {
+        // Iniciamos la interfaz gráfica
+        VentanaPrincipal gui = new VentanaPrincipal();
+        gui.iniciar();
+    }
+}
