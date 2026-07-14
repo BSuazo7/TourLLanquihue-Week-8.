@@ -1,0 +1,107 @@
+package ui;
+
+import data.GestorEntidades;
+import model.GuiaTuristico;
+import model.Vehiculo;
+import model.ColaboradorExterno;
+import model.Registrable;
+import javax.swing.JOptionPane;
+
+public class VentanaPrincipal {
+    private GestorEntidades gestor;
+
+    public VentanaPrincipal() {
+        this.gestor = new GestorEntidades();
+    }
+
+    public void iniciar() {
+        int opcion = 0;
+        String menu = "--- MENÚ LLANQUIHUE TOUR (GUI) ---\n" +
+                      "1. Registrar Guía Turístico\n" +
+                      "2. Registrar Vehículo\n" +
+                      "3. Registrar Colaborador Externo\n" +
+                      "4. Mostrar Resumen de Entidades\n" +
+                      "5. Salir";
+
+        do {
+            try {
+                String input = JOptionPane.showInputDialog(null, menu, "Llanquihue Tour v2.0", JOptionPane.QUESTION_MESSAGE);
+                
+                if (input == null) break; // Si presiona cancelar
+                
+                opcion = Integer.parseInt(input);
+
+                switch (opcion) {
+                    case 1:
+                        registrarGuia();
+                        break;
+                    case 2:
+                        registrarVehiculo();
+                        break;
+                    case 3:
+                        registrarColaborador();
+                        break;
+                    case 4:
+                        mostrarResumen();
+                        break;
+                    case 5:
+                        JOptionPane.showMessageDialog(null, "Saliendo del sistema...");
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opción no válida");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese un número válido");
+            }
+        } while (opcion != 5);
+    }
+
+    private void registrarGuia() {
+        String nombre = JOptionPane.showInputDialog("Nombre del Guía:");
+        String rut = JOptionPane.showInputDialog("RUT:");
+        String idioma = JOptionPane.showInputDialog("Idioma especializado:");
+        gestor.agregarEntidad(new GuiaTuristico(nombre, rut, idioma));
+        JOptionPane.showMessageDialog(null, "Guía registrado exitosamente");
+    }
+
+    private void registrarVehiculo() {
+        String patente = JOptionPane.showInputDialog("Patente:");
+        String modelo = JOptionPane.showInputDialog("Modelo:");
+        gestor.agregarEntidad(new Vehiculo(patente, modelo));
+        JOptionPane.showMessageDialog(null, "Vehículo registrado exitosamente");
+    }
+
+    private void registrarColaborador() {
+        String nombre = JOptionPane.showInputDialog("Nombre del Colaborador:");
+        String rut = JOptionPane.showInputDialog("RUT:");
+        String empresa = JOptionPane.showInputDialog("Empresa:");
+        gestor.agregarEntidad(new ColaboradorExterno(nombre, rut, empresa));
+        JOptionPane.showMessageDialog(null, "Colaborador registrado exitosamente");
+    }
+
+    private void mostrarResumen() {
+        if (gestor.getListaEntidades().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay entidades registradas");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder("--- RESUMEN DE ENTIDADES ---\n");
+        for (Registrable r : gestor.getListaEntidades()) {
+            if (r instanceof GuiaTuristico) {
+                GuiaTuristico g = (GuiaTuristico) r;
+                sb.append("[GUÍA] ").append(g.getNombre()).append(" - ").append(g.getIdioma()).append("\n");
+            } else if (r instanceof Vehiculo) {
+                Vehiculo v = (Vehiculo) r;
+                sb.append("[VEHÍCULO] ").append(v.getPatente()).append(" - ").append(v.getModelo()).append("\n");
+            } else if (r instanceof ColaboradorExterno) {
+                ColaboradorExterno c = (ColaboradorExterno) r;
+                sb.append("[COLABORADOR] ").append(c.getNombre()).append(" - ").append(c.getEmpresa()).append("\n");
+            }
+        }
+        
+        // También mostramos en consola para cumplir con ambos requisitos si es necesario
+        gestor.mostrarTodas();
+        
+        JOptionPane.showMessageDialog(null, sb.toString());
+    }
+}
